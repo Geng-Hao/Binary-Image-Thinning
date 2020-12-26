@@ -19,7 +19,7 @@ using namespace std;
  void initializeData(Data*, size_t, size_t);
 
  /*------------------------------ Thinning Algorithm Function Prototype---------------------*/
- void thiningAlgo(const Mat&,Mat*); 
+ void thiningAlgo(Mat*); 
  /*------------------------------ Thinning Algorithm Function Prototype---------------------*/
 
  
@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
 
     start_time = clock(); /* mircosecond */
     
-    thiningAlgo(src,&dst);
+    thiningAlgo(&dst);
 
     end_time = clock();
 
@@ -116,10 +116,10 @@ void initializeData(Data* d, size_t i, size_t j){
 
 
 /* ----------------------------------------thinning algorithm--------------------------------------*/
-void thiningAlgo(const Mat& IT, Mat* dst_ptr) {
+void thiningAlgo(Mat* dst_ptr) {
 
-    size_t numofRows = (size_t)IT.rows;
-    size_t numofCols = (size_t)IT.cols;
+    size_t numofRows = (size_t)dst_ptr->rows;
+    size_t numofCols = (size_t)dst_ptr->cols;
 
     int counter = 0;
     int A = 0;
@@ -230,9 +230,6 @@ void thiningAlgo(const Mat& IT, Mat* dst_ptr) {
             
             
             deleteList = pop_front(deleteList);
-              
-            if (d->i > numofRows - 1 || d->j > numofCols - 1)
-                continue;
 
             (dst_ptr)->ptr<uchar>(d->i)[d->j] = 0;
             
@@ -243,7 +240,6 @@ void thiningAlgo(const Mat& IT, Mat* dst_ptr) {
       
 
 
-        if(counter ==0) break;
         counter = 0;
         
        
@@ -329,10 +325,6 @@ void thiningAlgo(const Mat& IT, Mat* dst_ptr) {
             Data* d = (Data*)front(deleteList);
             
             deleteList = pop_front(deleteList);
-
-
-            if (d->i > (numofRows - 1) || d->j > (numofCols - 1))
-                continue;
 
             dst_ptr->ptr<uchar>(d->i)[d->j] = 0;
             
