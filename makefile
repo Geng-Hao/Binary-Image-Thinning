@@ -3,7 +3,7 @@ CC = g++
 
 LDLIBS = `pkg-config --cflags --libs opencv4`
 
-CFLAGS = -g -Wall
+CFLAGS = -g -Wall -O3
 
 all: PCB_Thinning
 
